@@ -1,6 +1,6 @@
 
 import {
-  IKernel
+  Kernel
 } from 'jupyter-js-services';
 
 import {
@@ -19,7 +19,7 @@ import {
 export
 class VegaWidgetFactory extends ABCWidgetFactory<VegaWidget, IDocumentModel> {
 
-  createNew(context: IDocumentContext<IDocumentModel>, kernel?: IKernel.IModel): VegaWidget {
+  createNew(context: IDocumentContext<IDocumentModel>, kernel?: Kernel.IModel): VegaWidget {
     let widget = new VegaWidget(context);
     this.widgetCreated.emit(widget);
     return widget;
@@ -31,7 +31,7 @@ class VegaWidgetFactory extends ABCWidgetFactory<VegaWidget, IDocumentModel> {
 export
 class VegaLiteWidgetFactory extends ABCWidgetFactory<VegaLiteWidget, IDocumentModel> {
 
-  createNew(context: IDocumentContext<IDocumentModel>, kernel?: IKernel.IModel): VegaLiteWidget {
+  createNew(context: IDocumentContext<IDocumentModel>, kernel?: Kernel.IModel): VegaLiteWidget {
     let widget = new VegaLiteWidget(context);
     this.widgetCreated.emit(widget);
     return widget;
