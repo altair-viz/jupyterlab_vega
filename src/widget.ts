@@ -19,7 +19,7 @@ import {
 } from 'jupyterlab/lib/common/activitymonitor';
 
 import {
-  IDocumentModel, IDocumentContext
+  DocumentRegistry
 } from 'jupyterlab/lib/docregistry';
 
 import {
@@ -52,7 +52,7 @@ const RENDER_TIMEOUT = 1000;
 export
 class BaseVegaWidget extends Panel {
 
-  constructor(context: IDocumentContext<IDocumentModel>) {
+  constructor(context: DocumentRegistry.IContext<DocumentRegistry.IModel>) {
     super();
     this.addClass(BASE_VEGA_CLASS);
     this._context = context;
@@ -69,7 +69,7 @@ class BaseVegaWidget extends Panel {
       timeout: RENDER_TIMEOUT
     });
     this._monitor.activityStopped.connect(() => { this.renderVega(); });
-    context.contentsModelChanged.connect(() => {
+    context.fileChanged.connect(() => {
       this.renderVega();
     });
   }
@@ -126,7 +126,7 @@ class BaseVegaWidget extends Panel {
 
   private _updateTitle = false;
   private _updateVega = false;
-  private _context: IDocumentContext<IDocumentModel>;
+  private _context: DocumentRegistry.IContext<DocumentRegistry.IModel>;
   private _monitor: ActivityMonitor<any, any> = null;
 }
 
@@ -139,7 +139,7 @@ class VegaWidget extends BaseVegaWidget {
   /**
    * Construct a VegaWidget
    */
-  constructor(context: IDocumentContext<IDocumentModel>) {
+  constructor(context: DocumentRegistry.IContext<DocumentRegistry.IModel>) {
     super(context);
     this.addClass(VEGA_CLASS);
     this.mimetype = 'application/vnd.vega+json';
@@ -155,7 +155,7 @@ class VegaLiteWidget extends BaseVegaWidget {
   /**
    * Construct a VegaLiteWidget
    */
-  constructor(context: IDocumentContext<IDocumentModel>) {
+  constructor(context: DocumentRegistry.IContext<DocumentRegistry.IModel>) {
     super(context);
     this.addClass(VEGALITE_CLASS);
     this.mimetype = 'application/vnd.vegalite+json';
