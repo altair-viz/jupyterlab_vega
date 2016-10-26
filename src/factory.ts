@@ -1,10 +1,10 @@
 
 import {
-  IKernel
-} from 'jupyter-js-services';
+  Kernel
+} from '@jupyterlab/services';
 
 import {
-  ABCWidgetFactory, IDocumentModel, IDocumentContext
+  ABCWidgetFactory, DocumentRegistry
 } from 'jupyterlab/lib/docregistry';
 
 import {
@@ -17,9 +17,9 @@ import {
 
 
 export
-class VegaWidgetFactory extends ABCWidgetFactory<VegaWidget, IDocumentModel> {
+class VegaWidgetFactory extends ABCWidgetFactory<VegaWidget, DocumentRegistry.IModel> {
 
-  createNew(context: IDocumentContext<IDocumentModel>, kernel?: IKernel.IModel): VegaWidget {
+  createNew(context: DocumentRegistry.IContext<DocumentRegistry.IModel>, kernel?: Kernel.IModel): VegaWidget {
     let widget = new VegaWidget(context);
     this.widgetCreated.emit(widget);
     return widget;
@@ -29,9 +29,9 @@ class VegaWidgetFactory extends ABCWidgetFactory<VegaWidget, IDocumentModel> {
 
 
 export
-class VegaLiteWidgetFactory extends ABCWidgetFactory<VegaLiteWidget, IDocumentModel> {
+class VegaLiteWidgetFactory extends ABCWidgetFactory<VegaLiteWidget, DocumentRegistry.IModel> {
 
-  createNew(context: IDocumentContext<IDocumentModel>, kernel?: IKernel.IModel): VegaLiteWidget {
+  createNew(context: DocumentRegistry.IContext<DocumentRegistry.IModel>, kernel?: Kernel.IModel): VegaLiteWidget {
     let widget = new VegaLiteWidget(context);
     this.widgetCreated.emit(widget);
     return widget;

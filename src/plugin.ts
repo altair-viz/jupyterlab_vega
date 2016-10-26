@@ -54,22 +54,22 @@ function activateVegaPlugin(app: JupyterLab,
     let options = {
       fileExtensions: VEGA_EXTENSIONS,
       defaultFor: VEGA_EXTENSIONS.slice(0,2),
-      displayName: 'Vega',
+      name: 'Vega',
       modelName: 'text',
       preferKernel: false,
       canStartKernel: false
     };
-    registry.addWidgetFactory(new VegaWidgetFactory(), options);
+    registry.addWidgetFactory(new VegaWidgetFactory(options));
 
     // Add file handler for standalone VegaLite JSON files
     options = {
       fileExtensions: VEGALITE_EXTENSIONS,
       defaultFor: VEGALITE_EXTENSIONS.slice(0,2),
-      displayName: 'VegaLite',
+      name: 'VegaLite',
       modelName: 'text',
       preferKernel: false,
       canStartKernel: false
     };
 
-    registry.addWidgetFactory(new VegaLiteWidgetFactory(), options);
+    registry.addWidgetFactory(new VegaLiteWidgetFactory(options));
 }
