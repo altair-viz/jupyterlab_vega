@@ -26,7 +26,7 @@ def _jupyter_nbextension_paths():
 
 def Vega(data):
     bundle = {
-        'application/vnd.vega+json': data,
+        'application/vnd.vega.v2+json': data,
         'application/json': data,
         'text/plain': '<jupyterlab_vega.Vega object>'
     }
