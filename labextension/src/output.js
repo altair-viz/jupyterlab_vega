@@ -1,7 +1,7 @@
 import { Widget } from 'phosphor/lib/ui/widget';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Vega, VegaLite } from 'jupyterlab_vega_react';
+import Vega from 'jupyterlab_vega_react';
 
 /**
  * The class name added to this OutputWidget.
@@ -18,6 +18,7 @@ class OutputWidget extends Widget {
     this.addClass(CLASS_NAME);
     this._source = options.source;
     this._mimetype = options.mimetype;
+    this._injector = options.injector;
   }
 
   /**
@@ -40,10 +41,17 @@ class OutputWidget extends Widget {
   _render() {
     const json = this._source;
     const mimetype = this._mimetype;
-    ReactDOM.render(
-      mimetype === 'application/vnd.vegalite+json' ? <VegaLite data={json} /> : <Vega data={json} />,
-      this.node
-    );
+    const props = {
+      data: json,
+      embedMode: mimetype === 'application/vnd.vegalite.v1+json' ? 'vega-lite' : 'vega',
+      renderedCallback: (error, result) => {
+        // Add a static image output to mime bundle
+        if (error) return console.log(error);
+        const imageData = result.view.toImageURL().split(',')[1];
+        this._injector('image/png', imageData);
+      }
+    };
+    ReactDOM.render(<Vega {...props} />, this.node);
   }
 
 }
@@ -53,6 +61,7 @@ export class VegaOutput {
   /**
    * The mime types this OutputRenderer accepts.
    */
+  mimetypes = [ 'application/vnd.vega.v2+json' ];
 
   /**
    * Whether the input can safely sanitized for a given mime type.
@@ -82,6 +91,7 @@ export class VegaLiteOutput {
   /**
    * The mime types this OutputRenderer accepts.
    */
+  mimetypes = [ 'application/vnd.vegalite.v1+json' ];
 
   /**
    * Whether the input can safely sanitized for a given mime type.
