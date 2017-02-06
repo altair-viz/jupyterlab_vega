@@ -36,14 +36,14 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/plugin.js', function (mod
 	  /**
 	   * Add the renderer to the registry of renderers.
 	   */
-	  rendermime.addRenderer('application/vnd.vega+json', new _output.VegaOutput(), index);
-	  rendermime.addRenderer('application/vnd.vegalite+json', new _output.VegaLiteOutput(), index);
+	  rendermime.addRenderer('application/vnd.vega.v2+json', new _output.VegaOutput(), index);
+	  rendermime.addRenderer('application/vnd.vegalite.v1+json', new _output.VegaLiteOutput(), index);
 	
 	  /**
 	   * Set the extensions associated with Vega.
 	   */
-	  var VEGA_EXTENSIONS = ['.vg', 'vg.json', '.json'];
-	  var VEGALITE_EXTENSIONS = ['.vl', 'vl.json', '.json'];
+	  var VEGA_EXTENSIONS = ['.vg', '.vg.json'];
+	  var VEGALITE_EXTENSIONS = ['.vl', '.vl.json'];
 	
 	  /**
 	   * Add file handler for vg files.
@@ -35074,6 +35074,8 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/output.js', function (mod
 	
 	var _jupyterlab_vega_react = __jupyter_require__('jupyterlab_vega_react@1.0.0/index.js');
 	
+	var _jupyterlab_vega_react2 = _interopRequireDefault(_jupyterlab_vega_react);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35102,6 +35104,7 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/output.js', function (mod
 	    _this.addClass(CLASS_NAME);
 	    _this._source = options.source;
 	    _this._mimetype = options.mimetype;
+	    _this._injector = options.injector;
 	    return _this;
 	  }
 	
@@ -35133,9 +35136,21 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/output.js', function (mod
 	  }, {
 	    key: '_render',
 	    value: function _render() {
+	      var _this2 = this;
+	
 	      var json = this._source;
 	      var mimetype = this._mimetype;
-	      _reactDom2.default.render(mimetype === 'application/vnd.vegalite+json' ? _react2.default.createElement(_jupyterlab_vega_react.VegaLite, { data: json }) : _react2.default.createElement(_jupyterlab_vega_react.Vega, { data: json }), this.node);
+	      var props = {
+	        data: json,
+	        embedMode: mimetype === 'application/vnd.vegalite.v1+json' ? 'vega-lite' : 'vega',
+	        renderedCallback: function renderedCallback(error, result) {
+	          // Add a static image output to mime bundle
+	          if (error) return console.log(error);
+	          var imageData = result.view.toImageURL().split(',')[1];
+	          _this2._injector('image/png', imageData);
+	        }
+	      };
+	      _reactDom2.default.render(_react2.default.createElement(_jupyterlab_vega_react2.default, props), this.node);
 	    }
 	  }]);
 	
@@ -35146,7 +35161,7 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/output.js', function (mod
 	  function VegaOutput() {
 	    _classCallCheck(this, VegaOutput);
 	
-	    this.mimetypes = ['application/vnd.vega+json'];
+	    this.mimetypes = ['application/vnd.vega.v2+json'];
 	  }
 	
 	  /**
@@ -35193,7 +35208,7 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/output.js', function (mod
 	  function VegaLiteOutput() {
 	    _classCallCheck(this, VegaLiteOutput);
 	
-	    this.mimetypes = ['application/vnd.vegalite+json'];
+	    this.mimetypes = ['application/vnd.vegalite.v1+json'];
 	  }
 	
 	  /**
@@ -56664,12 +56679,9 @@ jupyter.define('jupyterlab_vega_react@1.0.0/index.js', function (module, exports
 	  value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	exports.VegaLite = VegaLite;
-	exports.Vega = Vega;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __jupyter_require__('react@^15.3.2/react.js');
 	
@@ -56692,33 +56704,37 @@ jupyter.define('jupyterlab_vega_react@1.0.0/index.js', function (module, exports
 	var DEFAULT_WIDTH = 500;
 	var DEFAULT_HEIGHT = DEFAULT_WIDTH / 1.5;
 	
-	function defaultCallback() {
-	  return {};
-	}
+	var Vega = function (_React$Component) {
+	  _inherits(Vega, _React$Component);
 	
-	function embed(el, spec, mode, cb) {
-	  var embedSpec = { mode: mode, spec: spec };
-	  if (mode === 'vega-lite') {
-	    embedSpec.spec.config = _extends({}, embedSpec.spec.config, {
-	      cell: { width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT }
-	    });
+	  function Vega() {
+	    var _ref;
+	
+	    var _temp, _this, _ret;
+	
+	    _classCallCheck(this, Vega);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Vega.__proto__ || Object.getPrototypeOf(Vega)).call.apply(_ref, [this].concat(args))), _this), _this.embed = function (el, spec, mode, cb) {
+	      var embedSpec = { mode: mode, spec: spec };
+	      var width = DEFAULT_WIDTH;
+	      var height = DEFAULT_HEIGHT;
+	      if (mode === 'vega-lite') {
+	        embedSpec.spec.config = _extends({}, embedSpec.spec.config, {
+	          cell: { width: width, height: height }
+	        });
+	      }
+	      (0, _vegaEmbed2.default)(el, embedSpec, cb);
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
-	  (0, _vegaEmbed2.default)(el, embedSpec, cb);
-	}
 	
-	var VegaEmbed = function (_React$Component) {
-	  _inherits(VegaEmbed, _React$Component);
-	
-	  function VegaEmbed() {
-	    _classCallCheck(this, VegaEmbed);
-	
-	    return _possibleConstructorReturn(this, (VegaEmbed.__proto__ || Object.getPrototypeOf(VegaEmbed)).apply(this, arguments));
-	  }
-	
-	  _createClass(VegaEmbed, [{
+	  _createClass(Vega, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      embed(this.el, this.props.data, this.props.embedMode, this.props.renderedCallback);
+	      this.embed(this.el, this.props.data, this.props.embedMode, this.props.renderedCallback);
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
@@ -56728,7 +56744,7 @@ jupyter.define('jupyterlab_vega_react@1.0.0/index.js', function (module, exports
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      embed(this.el, this.props.data, this.props.embedMode, this.props.renderedCallback);
+	      this.embed(this.el, this.props.data, this.props.embedMode, this.props.renderedCallback);
 	    }
 	  }, {
 	    key: 'render',
@@ -56741,20 +56757,16 @@ jupyter.define('jupyterlab_vega_react@1.0.0/index.js', function (module, exports
 	    }
 	  }]);
 	
-	  return VegaEmbed;
+	  return Vega;
 	}(_react2.default.Component);
 	
-	VegaEmbed.defaultProps = {
-	  renderedCallback: defaultCallback,
+	Vega.defaultProps = {
+	  renderedCallback: function renderedCallback() {
+	    return {};
+	  },
 	  embedMode: 'vega-lite'
 	};
-	function VegaLite(props) {
-	  return _react2.default.createElement(VegaEmbed, { data: props.data, embedMode: 'vega-lite' });
-	}
-	
-	function Vega(props) {
-	  return _react2.default.createElement(VegaEmbed, { data: props.data, embedMode: 'vega' });
-	}
+	exports.default = Vega;
 })
 /** END DEFINE BLOCK for jupyterlab_vega_react@1.0.0/index.js **/
 
@@ -101899,6 +101911,8 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/doc.js', function (module
 	
 	var _jupyterlab_vega_react = __jupyter_require__('jupyterlab_vega_react@1.0.0/index.js');
 	
+	var _jupyterlab_vega_react2 = _interopRequireDefault(_jupyterlab_vega_react);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -101962,7 +101976,11 @@ jupyter.define('jupyterlab_vega_labextension@0.1.0/src/doc.js', function (module
 	        var content = this._context.model.toString();
 	        var json = content ? JSON.parse(content) : {};
 	        var path = this._context._path;
-	        _reactDom2.default.render(path.includes('.vl') ? _react2.default.createElement(_jupyterlab_vega_react.VegaLite, { data: json }) : _react2.default.createElement(_jupyterlab_vega_react.Vega, { data: json }), this.node);
+	        var props = {
+	          data: json,
+	          embedMode: path.includes('.vl') ? 'vega-lite' : 'vega'
+	        };
+	        _reactDom2.default.render(_react2.default.createElement(_jupyterlab_vega_react2.default, props), this.node);
 	      }
 	    }
 	
