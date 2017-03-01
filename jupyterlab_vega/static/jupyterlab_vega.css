@@ -10,8 +10,7 @@
 */
 
 .jp-OutputWidgetVega, .jp-DocWidgetVega {
-  padding: 0;
-  overflow-y: scroll;
+  padding: 5px 0;
 }
 
 .jp-OutputWidgetVega {
@@ -19,5 +18,5 @@
 }
 
 .jp-DocWidgetVega {
-  
+  padding: 5px;
 }

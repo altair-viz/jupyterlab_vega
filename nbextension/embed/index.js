@@ -34,7 +34,7 @@ define(function() { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.c = installedModules;
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "https://unpkg.com/jupyterlab_vega@0.0.1/lib/";
+/******/ 	__webpack_require__.p = "https://unpkg.com/jupyterlab_vega@0.17.0/lib/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -65,7 +65,7 @@ define(function() { return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 		"name": "jupyterlab_vega_nbextension",
-		"version": "0.0.1",
+		"version": "0.17.0",
 		"description": "A Jupyter Notebook extension for rendering Vega",
 		"author": "Grant Nestor <grantnestor@gmail.com>",
 		"main": "lib/index.js",
@@ -76,7 +76,7 @@ define(function() { return /******/ (function(modules) { // webpackBootstrap
 		],
 		"scripts": {
 			"build": "webpack",
-			"watch": "watch \"npm run build\" src ../component --wait 10 --ignoreDotFiles",
+			"watch": "watch \"npm install\" src ../component --wait 10 --ignoreDotFiles",
 			"preinstall": "npm install ../component",
 			"prepublish": "npm run build",
 			"extension:install": "jupyter nbextension install --symlink --py --sys-prefix notebook_json",

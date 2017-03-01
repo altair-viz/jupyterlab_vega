@@ -1,4 +1,4 @@
-define(["nbextensions/jupyterlab_vega/index","jquery"], function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) { return /******/ (function(modules) { // webpackBootstrap
+define(["nbextensions/jupyterlab_vega/index","base/js/namespace"], function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -50,11 +50,15 @@ define(["nbextensions/jupyterlab_vega/index","jquery"], function(__WEBPACK_EXTER
 	  value: true
 	});
 	exports.load_ipython_extension = load_ipython_extension;
-	// This file contains the javascript that is run when the notebook is loaded.
-	// It contains some requirejs configuration and the `load_ipython_extension`
-	// which is required for any notebook extension.
+	/**
+	 * This file contains the javascript that is run when the notebook is loaded.
+	 * It contains some requirejs configuration and the `load_ipython_extension` 
+	 * which is required for any notebook extension.
+	 */
 	
-	// Configure requirejs
+	/**
+	 * Configure requirejs.
+	 */
 	if (window.require) {
 	  window.require.config({
 	    map: {
@@ -65,13 +69,17 @@ define(["nbextensions/jupyterlab_vega/index","jquery"], function(__WEBPACK_EXTER
 	  });
 	}
 	
-	// Export the required load_ipython_extention
+	/**
+	 * Export the required load_ipython_extention.
+	 */
 	function load_ipython_extension() {
-	  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function (Extension, $) {
-	    Extension.register_renderer($);
-	    Extension.render_cells($);
+	  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function (Extension, Jupyter) {
+	    var notebook = Jupyter.notebook;
+	
+	    Extension.register_renderer(notebook);
+	    Extension.render_cells(notebook);
 	  }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	};
+	}
 
 /***/ },
 /* 1 */
