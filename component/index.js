@@ -30,9 +30,8 @@ export default class Vega extends React.Component {
 
   embed = () => {
     const { data: spec, embedMode: mode, renderedCallback: cb } = this.props;
-    const embedSpec = {
-      mode,
-      spec,
+    const options = {
+      mode: this.props.embedMode,
       actions: true,
       config: mode === 'vega-lite'
         ? {
@@ -40,6 +39,6 @@ export default class Vega extends React.Component {
           }
         : {}
     };
-    vegaEmbed(this.el, embedSpec, cb);
+    vegaEmbed(this.el, spec, options, cb);
   };
 }
