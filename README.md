@@ -135,15 +135,7 @@ To render a `.vg` file as a tree, simply open it:
 
 ## Install
 
-```bash
-pip install jupyterlab_vega
-# For JupyterLab
-jupyter labextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter labextension enable --py --sys-prefix jupyterlab_vega
-# For Notebook
-jupyter nbextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter nbextension enable --py --sys-prefix jupyterlab_vega
-```
+You no longer need to install the jupyterlab_vega extension.  Just call ``altair.enable_mime_rendering()`` in your notebook.
 
 ## Development
 
