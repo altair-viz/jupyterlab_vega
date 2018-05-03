@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "jupyterlab_vega_nbextension",
+  "name": "jupyter_vega_nbextension",
   "version": "0.18.0",
   "description": "A Jupyter Notebook extension for rendering Vega",
   "author": "Grant Nestor <grantnestor@gmail.com>",
@@ -15,10 +15,10 @@
     "watch": "watch \"npm install\" src ../component --wait 10 --ignoreDotFiles",
     "preinstall": "npm install ../component",
     "prepublish": "npm run build",
-    "extension:install": "jupyter nbextension install --symlink --py --sys-prefix jupyterlab_vega",
-    "extension:uninstall": "jupyter nbextension uninstall --py --sys-prefix jupyterlab_vega",
-    "extension:enable": "jupyter nbextension enable --py --sys-prefix jupyterlab_vega",
-    "extension:disable": "jupyter nbextension disable --py --sys-prefix jupyterlab_vega"
+    "extension:install": "jupyter nbextension install --symlink --py --sys-prefix jupyter_vega",
+    "extension:uninstall": "jupyter nbextension uninstall --py --sys-prefix jupyter_vega",
+    "extension:enable": "jupyter nbextension enable --py --sys-prefix jupyter_vega",
+    "extension:disable": "jupyter nbextension disable --py --sys-prefix jupyter_vega"
   },
   "dependencies": {
     "react": "^15.3.2",

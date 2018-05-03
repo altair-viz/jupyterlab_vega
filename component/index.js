@@ -2,13 +2,12 @@ import React from 'react';
 import vegaEmbed from 'vega-embed';
 import './index.css';
 
-const DEFAULT_WIDTH = 840;
-const DEFAULT_HEIGHT = DEFAULT_WIDTH / 1.5;
-
 export default class Vega extends React.Component {
   static defaultProps = {
-    renderedCallback: () => ({}),
-    embedMode: 'vega-lite'
+    callback: () => ({}),
+    mode: 'vega-lite',
+    width: 840,
+    height: 360
   };
 
   componentDidMount() {
@@ -20,25 +19,29 @@ export default class Vega extends React.Component {
   }
 
   render() {
-    return <div ref={el => this.el = el} />;
+    return <div 
+      ref={element => {
+        this.element = element;
+      }} 
+    />;
   }
 
   embed = () => {
     const {
-      data: spec,
-      embedMode: mode,
-      renderedCallback: cb,
-      width = DEFAULT_WIDTH,
-      height = DEFAULT_HEIGHT
+      spec,
+      mode,
+      callback,
+      width,
+      height
     } = this.props;
     const embedSpec = {
       mode,
       spec: {
         ...spec,
-        width: width - 50,
-        height: height - 100
+        width,
+        height
       }
     };
-    vegaEmbed(this.el, embedSpec, cb);
+    vegaEmbed(this.element, embedSpec, callback);
   };
 }

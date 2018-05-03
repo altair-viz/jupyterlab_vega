@@ -28,16 +28,6 @@ const VEGALITE_EXTENSIONS = ['.vl', '.vl.json'];
  * Activate the extension.
  */
 function activatePlugin(app, rendermime, registry, restorer) {
-  /**
-   * Calculate the index of the renderer in the array renderers
-   * e.g. Insert this renderer after any renderers with mime type that matches 
-   * "+json"
-   */
-  // const index = ArrayExt.findLastIndex(
-  //   toArray(rendermime.mimeTypes()),
-  //   mime => mime.endsWith('+json')
-  // ) + 1;
-  /* ...or just insert it at the top */
   const index = 0;
 
   /**
@@ -50,7 +40,6 @@ function activatePlugin(app, rendermime, registry, restorer) {
     },
     index
   );
-  
   rendermime.addRenderer(
     {
       mimeType: VEGALITE_MIME_TYPE,
@@ -59,37 +48,38 @@ function activatePlugin(app, rendermime, registry, restorer) {
     index
   );
 
-  const vegaFactory = new DocWidgetFactory({
-    fileExtensions: VEGA_EXTENSIONS,
-    defaultFor: VEGA_EXTENSIONS.slice(0, 2),
-    name: VEGA_FACTORY
-  });
-
-  const vegaLiteFactory = new DocWidgetFactory({
-    fileExtensions: VEGALITE_EXTENSIONS,
-    defaultFor: VEGALITE_EXTENSIONS.slice(0, 2),
-    name: VEGALITE_FACTORY
-  });
-
   /**
    * Add document renderer for .vg and .vl files
    */
-  registry.addWidgetFactory(vegaFactory);
-  registry.addWidgetFactory(vegaLiteFactory);
-
-  const tracker = new InstanceTracker({
-    namespace: VEGA_FACTORY,
-    shell: app.shell
-  });
+  registry.addWidgetFactory(
+    new DocWidgetFactory({
+      fileExtensions: VEGA_EXTENSIONS,
+      defaultFor: VEGA_EXTENSIONS.slice(0, 2),
+      name: VEGA_FACTORY
+    })
+  );
+  registry.addWidgetFactory(
+    new DocWidgetFactory({
+      fileExtensions: VEGALITE_EXTENSIONS,
+      defaultFor: VEGALITE_EXTENSIONS.slice(0, 2),
+      name: VEGALITE_FACTORY
+    })
+  );
 
   /**
    * Handle widget state deserialization
    */
-  restorer.restore(tracker, {
-    command: 'file-operations:open',
-    args: widget => ({ path: widget.context.path, factory: VEGA_FACTORY }),
-    name: widget => widget.context.path
-  });
+  restorer.restore(
+    new InstanceTracker({
+      namespace: VEGA_FACTORY,
+      shell: app.shell
+    }),
+    {
+      command: 'file-operations:open',
+      args: widget => ({ path: widget.context.path, factory: VEGA_FACTORY }),
+      name: widget => widget.context.path
+    }
+  );
 
   /**
    * Serialize widget state
@@ -101,7 +91,6 @@ function activatePlugin(app, rendermime, registry, restorer) {
       tracker.save(widget);
     });
   });
-  
   vegaLiteFactory.widgetCreated.connect((sender, widget) => {
     tracker.add(widget);
     /* Notify the instance tracker if restore data needs to update */

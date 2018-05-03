@@ -1,4 +1,4 @@
-# jupyterlab_vega
+# jupyter_vega
 
 A JupyterLab and Jupyter Notebook extension for rendering Vega and Vega-lite
 
@@ -131,20 +131,20 @@ altair.Chart(cars).mark_point().encode(
 )
 ```
 
-To render a `.vg` file as a tree, simply open it:
+To render a `.vg` or `.vl` file in JupyterLab, simply open it:
 
 ![file renderer](http://g.recordit.co/GV5w7wQbcf.gif)
 
 ## Install
 
 ```bash
-pip install jupyterlab_vega
+pip install jupyter_vega
 # For JupyterLab
-jupyter labextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter labextension enable --py --sys-prefix jupyterlab_vega
+jupyter labextension install --symlink --py --sys-prefix jupyter_vega
+jupyter labextension enable --py --sys-prefix jupyter_vega
 # For Notebook
-jupyter nbextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter nbextension enable --py --sys-prefix jupyterlab_vega
+jupyter nbextension install --symlink --py --sys-prefix jupyter_vega
+jupyter nbextension enable --py --sys-prefix jupyter_vega
 ```
 
 ## Development
@@ -152,9 +152,9 @@ jupyter nbextension enable --py --sys-prefix jupyterlab_vega
 ```bash
 pip install -e .
 # For JupyterLab
-jupyter labextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter labextension enable --py --sys-prefix jupyterlab_vega
+jupyter labextension install --symlink --py --sys-prefix jupyter_vega
+jupyter labextension enable --py --sys-prefix jupyter_vega
 # For Notebook
-jupyter nbextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter nbextension enable --py --sys-prefix jupyterlab_vega
+jupyter nbextension install --symlink --py --sys-prefix jupyter_vega
+jupyter nbextension enable --py --sys-prefix jupyter_vega
 ```

@@ -4,7 +4,7 @@ import { ActivityMonitor } from '@jupyterlab/coreutils';
 import { runMode } from '@jupyterlab/codemirror';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import VegaComponent from 'jupyterlab_vega_react';
+import VegaComponent from 'jupyter_vega_react';
 
 const CLASS_NAME = 'jp-DocWidgetVega';
 const RENDER_TIMEOUT = 1000;
@@ -32,7 +32,7 @@ class ErrorDisplay extends React.Component {
 }
 
 /**
- * A widget for rendering jupyterlab_vega files
+ * A widget for rendering jupyter_vega files
  */
 export class DocWidget extends Widget {
   constructor(context) {

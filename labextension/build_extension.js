@@ -2,12 +2,12 @@ var buildExtension = require('@jupyterlab/extension-builder').buildExtension;
 var path = require('path');
 
 buildExtension({
-  name: 'jupyterlab_vega',
+  name: 'jupyter_vega',
   entry: path.join(__dirname, 'src', 'plugin.js'),
   outputDir: path.join(
     __dirname,
     '..',
-    'jupyterlab_vega',
+    'jupyter_vega',
     'static'
   ),
   useDefaultLoaders: false,
@@ -41,7 +41,7 @@ buildExtension({
             path.join(
               __dirname,
               'node_modules',
-              'jupyterlab_vega_react'
+              'jupyter_vega_react'
             )
           ],
           loader: 'babel-loader',

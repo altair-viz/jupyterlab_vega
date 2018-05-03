@@ -1,4 +1,4 @@
-# jupyterlab_vega
+# jupyter_vega
 
 Single Python package for lab and notebook extensions
 

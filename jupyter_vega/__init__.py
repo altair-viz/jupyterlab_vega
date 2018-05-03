@@ -6,7 +6,7 @@ import warnings
 
 def _jupyter_labextension_paths():
     return [{
-        'name': 'jupyterlab_vega',
+        'name': 'jupyter_vega',
         'src': 'static',
     }]
 
@@ -14,8 +14,8 @@ def _jupyter_nbextension_paths():
     return [{
         'section': 'notebook',
         'src': 'static',
-        'dest': 'jupyterlab_vega',
-        'require': 'jupyterlab_vega/extension'
+        'dest': 'jupyter_vega',
+        'require': 'jupyter_vega/extension'
     }]
 
 def _safe_exists(path):

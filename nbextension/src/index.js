@@ -9,7 +9,7 @@
 __webpack_public_path__ = document
   .querySelector('body')
   .getAttribute('data-base-url') +
-  'nbextensions/jupyterlab_vega/';
+  'nbextensions/jupyter_vega/';
 
 /**
  * Export widget models and views, and the npm package version number.

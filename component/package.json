@@ -1,5 +1,5 @@
 {
-  "name": "jupyterlab_vega_react",
+  "name": "jupyter_vega_react",
   "version": "1.0.0",
   "description": "A React component for rendering Vega",
   "main": "index.js",

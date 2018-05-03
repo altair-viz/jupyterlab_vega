@@ -4,4 +4,4 @@ default_context:
     mime_type: "application/vnd.vega.v2+json"
     file_extension: "vg"
     mime_short_name: "Vega"
-    extension_name: "jupyterlab_vega"
+    extension_name: "jupyter_vega"

@@ -9,7 +9,7 @@ build/
 dist/
 
 # Compiled javascript
-jupyterlab_vega/static/
+jupyter_vega/static/
 
 # OS X
 .DS_Store

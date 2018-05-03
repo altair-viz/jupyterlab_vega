@@ -1,7 +1,7 @@
 import { Widget } from '@phosphor/widgets';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import VegaComponent from 'jupyterlab_vega_react';
+import VegaComponent from 'jupyter_vega_react';
 
 const VEGA_MIME_TYPE = 'application/vnd.vega.v2+json';
 const VEGALITE_MIME_TYPE = 'application/vnd.vegalite.v1+json';
@@ -36,19 +36,6 @@ export class OutputWidget extends Widget {
   }
 
   /**
-   * A message handler invoked on a `'child-added'` message
-   */
-  onChildAdded(msg) {
-    /* e.g. Inject a static image representation into the mime bundle for
-     *  endering on Github, etc. 
-     */
-    // renderLibrary.toPng(this.node).then(url => {
-    //   const data = url.split(',')[1];
-    //   this._data.set('image/png', data);
-    // })
-  }
-
-  /**
    * A message handler invoked on a `'resize'` message
    */
   onResize(msg) {
@@ -61,12 +48,12 @@ export class OutputWidget extends Widget {
    */
   _render() {
     const props = {
-      data: this._data.get(this._mimeType),
+      spec: this._data.get(this._mimeType),
       metadata: this._metadata.get(this._mimeType),
-      embedMode: this._mimeType === VEGALITE_MIME_TYPE
+      mode: this._mimeType === VEGALITE_MIME_TYPE
         ? 'vega-lite'
         : 'vega',
-      renderedCallback: (error, result) => {
+      callback: (error, result) => {
         if (error) return console.log(error);
         // Add a static image output to mime bundle
         const imageData = result.view.toImageURL().split(',')[1];

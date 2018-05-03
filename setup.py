@@ -6,9 +6,9 @@ cmdclass['labextension'] = install_npm('labextension')
 cmdclass['nbextension'] = install_npm('nbextension')
 
 setup_args = dict(
-    name                 = 'jupyterlab_vega',
+    name                 = 'jupyter_vega',
     version              = '0.18.0',
-    packages             = ['jupyterlab_vega'],
+    packages             = ['jupyter_vega'],
     author               = 'Grant Nestor',
     author_email         = 'grantnestor@gmail.com',
     url                  = 'http://jupyter.org',

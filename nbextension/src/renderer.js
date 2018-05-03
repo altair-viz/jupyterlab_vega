@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import VegaComponent from 'jupyterlab_vega_react';
+import VegaComponent from 'jupyter_vega_react';
 import './index.css';
 
 const VEGA_MIME_TYPE = 'application/vnd.vega.v2+json';
@@ -27,36 +27,12 @@ function handleClearOutput(event, { cell: { output_area } }) {
 }
 
 /**
- * Handle when a new output is added
- */
-function handleAddOutput(event, { output, output_area }) {
-  /* Get rendered DOM node */
-  const toinsert = output_area.element.find(`.${CLASS_NAME.split(' ')[0]}`);
-  /** e.g. Inject a static image representation into the mime bundle for
-   *  endering on Github, etc.
-   */
-  // if (toinsert[0]) {
-  //   renderLibrary.toPng(toinsert[0]).then(url => {
-  //     const data = url.split(',')[1];
-  //     output_area.outputs
-  //       .filter(output => output.data[MIME_TYPE])
-  //       .forEach(output => {
-  //         output.data['image/png'] = data;
-  //       });
-  //   });
-  // }
-}
-
-/**
  * Register the mime type and append_mime function with the notebook's 
  * output area
  */
 export function register_renderer(notebook, events, OutputArea) {
   /* A function to render output of 'application/vnd.vega.v2+json' mime type */
   const append_mime = function(mimetype) {
-    const embedMode = mimetype === 'application/vnd.vegalite.v1+json'
-      ? 'vega-lite'
-      : 'vega';
     return function(data, metadata, element) {
       /* Create a DOM node to render to */
       const toinsert = this.create_output_subarea(
@@ -67,12 +43,12 @@ export function register_renderer(notebook, events, OutputArea) {
       this.keyboard_manager.register_events(toinsert);
       /* Render data to DOM node */
       const props = {
-        data,
+        spec: data,
         metadata: metadata[mimetype],
-        embedMode,
-        width: element.width(),
-        height: DEFAULT_HEIGHT,
-        renderedCallback: (error, result) => {
+        mode: mimetype === 'application/vnd.vegalite.v1+json'
+          ? 'vega-lite'
+          : 'vega',
+        callback: (error, result) => {
           if (error) return console.log(error);
           // Add a static image output to mime bundle
           const imageData = result.view.toImageURL().split(',')[1];
@@ -93,24 +69,10 @@ export function register_renderer(notebook, events, OutputArea) {
   events.on('clear_output.CodeCell', handleClearOutput);
   events.on('delete.Cell', handleClearOutput);
 
-  /* Handle when a new output is added */
-  events.on('output_added.OutputArea', handleAddOutput);
-
-  /**
-   * Calculate the index of this renderer in `output_area.display_order`
-   * e.g. Insert this renderer after any renderers with mime type that matches 
-   * "+json"
-   */
-  // const mime_types = output_area.mime_types();
-  // const json_types = mime_types.filter(mimetype => mimetype.includes('+json'));
-  // const index = mime_types.lastIndexOf(json_types.pop() + 1);
-
-  /* ...or just insert it at the top */
-  const index = 0;
-
   /**
    * Register the mime type and append_mime function with output_area
    */
+  const index = 0;
   OutputArea.prototype.register_mime_type(
     VEGA_MIME_TYPE,
     append_mime(VEGA_MIME_TYPE),
