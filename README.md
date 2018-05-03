@@ -1,6 +1,6 @@
-# jupyterlab_vega
+# jupyter_vega
 
-A JupyterLab and Jupyter Notebook extension for rendering Vega and Vega-lite
+A JupyterLab and Jupyter Notebook extension for rendering Vega
 
 **This repository is no longer active; the vega/vega-lite extension now comes bundled with JupyterLab by default**
 
@@ -8,14 +8,14 @@ A JupyterLab and Jupyter Notebook extension for rendering Vega and Vega-lite
 
 ## Prerequisites
 
-* JupyterLab ^0.18.0 and/or Notebook >=4.3.0
+* JupyterLab ^0.20.0 and/or Notebook >=4.3.0
 
 ## Usage
 
 To render Vega output in IPython:
 
 ```python
-from jupyterlab_vega import Vega
+from jupyter_vega import Vega
 
 Vega({
     "width": 400,
@@ -138,13 +138,12 @@ To render a `.vg` file as a tree, simply open it:
 ## Install
 
 ```bash
-pip install jupyterlab_vega
 # For JupyterLab
-jupyter labextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter labextension enable --py --sys-prefix jupyterlab_vega
+jupyter labextension install jupyter_vega
 # For Notebook
-jupyter nbextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter nbextension enable --py --sys-prefix jupyterlab_vega
+pip install jupyter_vega
+jupyter nbextension install --py --sys-prefix jupyter_vega
+jupyter nbextension enable --py --sys-prefix jupyter_vega
 ```
 
 ## Development
@@ -152,9 +151,9 @@ jupyter nbextension enable --py --sys-prefix jupyterlab_vega
 ```bash
 pip install -e .
 # For JupyterLab
-jupyter labextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter labextension enable --py --sys-prefix jupyterlab_vega
+cd labextension
+jupyter labextension link .
 # For Notebook
-jupyter nbextension install --symlink --py --sys-prefix jupyterlab_vega
-jupyter nbextension enable --py --sys-prefix jupyterlab_vega
+jupyter nbextension install --symlink --py --sys-prefix jupyter_vega
+jupyter nbextension enable --py --sys-prefix jupyter_vega
 ```

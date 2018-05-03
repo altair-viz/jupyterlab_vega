@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "jupyterlab_vega_nbextension",
-  "version": "0.18.0",
+  "name": "jupyter_vega_nbextension",
+  "version": "0.20.2",
   "description": "A Jupyter Notebook extension for rendering Vega",
   "author": "Grant Nestor <grantnestor@gmail.com>",
   "main": "src/index.js",
@@ -12,15 +12,15 @@
   ],
   "scripts": {
     "build": "webpack",
-    "watch": "watch \"npm install\" src ../component --wait 10 --ignoreDotFiles",
-    "preinstall": "npm install ../component",
-    "prepublish": "npm run build",
-    "extension:install": "jupyter nbextension install --symlink --py --sys-prefix jupyterlab_vega",
-    "extension:uninstall": "jupyter nbextension uninstall --py --sys-prefix jupyterlab_vega",
-    "extension:enable": "jupyter nbextension enable --py --sys-prefix jupyterlab_vega",
-    "extension:disable": "jupyter nbextension disable --py --sys-prefix jupyterlab_vega"
+    "prepublishOnly": "npm run build",
+    "watch": "watch \"npm run build\" src --wait 10 --ignoreDotFiles",
+    "extension:install": "jupyter nbextension install --symlink --py --sys-prefix jupyter_vega",
+    "extension:uninstall": "jupyter nbextension uninstall --py --sys-prefix jupyter_vega",
+    "extension:enable": "jupyter nbextension enable --py --sys-prefix jupyter_vega",
+    "extension:disable": "jupyter nbextension disable --py --sys-prefix jupyter_vega"
   },
   "dependencies": {
+    "jupyter_vega_react": "file:../component",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
   },

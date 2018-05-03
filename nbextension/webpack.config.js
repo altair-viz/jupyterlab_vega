@@ -10,7 +10,7 @@ var loaders = [
     test: /\.js$/,
     include: [
       path.join(__dirname, 'src'),
-      path.join(__dirname, 'node_modules', 'jupyterlab_vega_react')
+      path.join(__dirname, '..', 'component')
     ],
     loader: 'babel-loader',
     query: { presets: [ 'latest', 'stage-0', 'react' ] }
@@ -46,7 +46,7 @@ var base = {
   devtool: 'source-map',
   module: { loaders },
   externals: [
-    'nbextensions/jupyterlab_vega/index',
+    'nbextensions/jupyter_vega/index',
     'base/js/namespace',
     'base/js/events',
     'notebook/js/outputarea'
@@ -70,7 +70,7 @@ module.exports = [
       path: path.join(
         __dirname,
         '..',
-        'jupyterlab_vega',
+        'jupyter_vega',
         'static'
       )
     })
@@ -90,13 +90,13 @@ module.exports = [
       path: path.join(
         __dirname,
         '..',
-        'jupyterlab_vega',
+        'jupyter_vega',
         'static'
       )
     })
   }),
   /**
-   * Embeddable jupyterlab_vega bundle
+   * Embeddable jupyter_vega bundle
    * 
    * This bundle is generally almost identical to the notebook bundle
    * containing the custom widget views and models.
@@ -115,7 +115,7 @@ module.exports = [
     output: Object.assign({}, base.output, {
       filename: 'index.js',
       path: path.join(__dirname, 'embed'),
-      publicPath: 'https://unpkg.com/jupyterlab_vega@' +
+      publicPath: 'https://unpkg.com/jupyter_vega@' +
         version +
         '/lib/'
     })

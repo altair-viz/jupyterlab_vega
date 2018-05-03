@@ -4,7 +4,7 @@ import { ActivityMonitor } from '@jupyterlab/coreutils';
 import { runMode } from '@jupyterlab/codemirror';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import VegaComponent from 'jupyterlab_vega_react';
+import VegaComponent from 'jupyter_vega_react';
 
 const CLASS_NAME = 'jp-DocWidgetVega';
 const RENDER_TIMEOUT = 1000;
@@ -32,7 +32,7 @@ class ErrorDisplay extends React.Component {
 }
 
 /**
- * A widget for rendering jupyterlab_vega files
+ * A widget for rendering Vega files
  */
 export class DocWidget extends Widget {
   constructor(context) {
@@ -106,14 +106,17 @@ export class DocWidget extends Widget {
     if (this.isAttached && this._context.isReady) this._render();
   }
 
+  /**
+   * Render data to DOM node
+   */
   _render() {
     const content = this._context.model.toString();
     try {
       const props = {
         data: JSON.parse(content),
         embedMode: this._context._path.includes('.vl') ? 'vega-lite' : 'vega',
-        width: this.node.offsetWidth,
-        height: this.node.offsetHeight
+        width: this.node.offsetWidth - 50,
+        height: this.node.offsetHeight - 80
       };
       ReactDOM.render(<VegaComponent {...props} />, this.node);
     } catch (error) {
@@ -124,6 +127,9 @@ export class DocWidget extends Widget {
     }
   }
 
+  /**
+   * A message handler invoked on a `'path-changed'` message
+   */
   _onPathChanged() {
     this.title.label = this._context.path.split('/').pop();
   }

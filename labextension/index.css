@@ -1,29 +1,25 @@
-/* 
-  Copyright (c) Jupyter Development Team.
-  Distributed under the terms of the Modified BSD License. 
-*/
-
 .jp-OutputWidgetVega, .jp-DocWidgetVega {
   width: 100%;
   padding: 0;
   font-size: 13px;
+  overflow: hidden;
 }
 
 .jp-OutputWidgetVega {
-  padding-top: 5px;
+  margin-top: 5px;
   height: 360px;
+  
 }
 
 .jp-DocWidgetVega {
   padding: 5px;
-  overflow: auto;
 }
 
 .jp-DocWidgetVega .jp-mod-error {
   width: 100%;
   min-height: 100%;
   text-align: center; 
-  padding: 10px; 
+  padding: 5px;
   box-sizing: border-box;
 }
 

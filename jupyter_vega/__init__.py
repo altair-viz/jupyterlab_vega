@@ -6,7 +6,7 @@ import warnings
 
 def _jupyter_labextension_paths():
     return [{
-        'name': 'jupyterlab_vega',
+        'name': 'jupyer_vega',
         'src': 'static',
     }]
 
@@ -14,8 +14,8 @@ def _jupyter_nbextension_paths():
     return [{
         'section': 'notebook',
         'src': 'static',
-        'dest': 'jupyterlab_vega',
-        'require': 'jupyterlab_vega/extension'
+        'dest': 'jupyer_vega',
+        'require': 'jupyer_vega/extension'
     }]
 
 def _safe_exists(path):
@@ -220,7 +220,7 @@ class Vega():
     def _ipython_display_(self):
         bundle = {
             'application/vnd.vega.v2+json': prepare_vega_spec(self.spec, self.data),
-            'text/plain': '<jupyterlab_vega.Vega object>'
+            'text/plain': '<jupyer_vega.Vega object>'
         }
         display(bundle, raw=True) 
         
@@ -263,7 +263,7 @@ class VegaLite(Vega):
     def _ipython_display_(self):
         bundle = {
             'application/vnd.vegalite.v1+json': prepare_vegalite_spec(self.spec, self.data),
-            'text/plain': '<jupyterlab_vega.VegaLite object>'
+            'text/plain': '<jupyer_vega.VegaLite object>'
         }
         display(bundle, metadata=metadata, raw=True) 
         
@@ -306,7 +306,7 @@ class VegaLite(Vega):
     def _ipython_display_(self):
         bundle = {
             'application/vnd.vegalite.v1+json': prepare_vegalite_spec(self.spec, self.data),
-            'text/plain': '<jupyterlab_vega.VegaLite object>'
+            'text/plain': '<jupyer_vega.VegaLite object>'
         }
         metadata = {
             'application/vnd.vegalite.v1+json': self.metadata

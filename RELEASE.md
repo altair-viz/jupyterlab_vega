@@ -1,6 +1,6 @@
-# Making a jupyterlab_vega release
+# Making a jupyter_vega release
 
-This document guides an extension maintainer through creating and publishing a release of jupyterlab_vega. This process creates a Python source package and a Python universal wheel and uploads them to PyPI.
+This document guides an extension maintainer through creating and publishing a release of jupyter_vega. This process creates a Python source package and a Python universal wheel and uploads them to PyPI.
 
 ## Update version number
 

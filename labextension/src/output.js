@@ -1,7 +1,7 @@
 import { Widget } from '@phosphor/widgets';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import VegaComponent from 'jupyterlab_vega_react';
+import VegaComponent from 'jupyter_vega_react';
 
 const VEGA_MIME_TYPE = 'application/vnd.vega.v2+json';
 const VEGALITE_MIME_TYPE = 'application/vnd.vegalite.v1+json';
@@ -28,7 +28,7 @@ export class OutputWidget extends Widget {
   }
 
   /**
-   * A message handler invoked on an `'before-detach'` message
+   * A message handler invoked on a `'before-detach'` message
    */
   onBeforeDetach(msg) {
     /* Dispose of resources used by this widget */
@@ -72,8 +72,8 @@ export class OutputWidget extends Widget {
         const imageData = result.view.toImageURL().split(',')[1];
         this._data.set('image/png', imageData);
       },
-      width: this.node.offsetWidth,
-      height: this.node.offsetHeight
+      width: this.node.offsetWidth - 50,
+      height: this.node.offsetHeight - 80
     };
     ReactDOM.render(<VegaComponent {...props} />, this.node);
   }

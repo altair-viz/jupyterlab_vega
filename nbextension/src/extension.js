@@ -11,7 +11,7 @@ if (window.require) {
   window.require.config({
     map: {
       '*': {
-        'jupyterlab_vega': 'nbextensions/jupyterlab_vega/index'
+        'jupyter_vega': 'nbextensions/jupyter_vega/index'
       }
     }
   });
@@ -23,7 +23,7 @@ if (window.require) {
 export function load_ipython_extension() {
   define(
     [
-      'nbextensions/jupyterlab_vega/index',
+      'nbextensions/jupyter_vega/index',
       'base/js/namespace',
       'base/js/events',
       'notebook/js/outputarea'
