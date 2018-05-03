@@ -1,5 +1,7 @@
 # jupyterlab_vega
 
+**[DEPRECTAED]**: Please use the vega extension from https://github.com/jupyterlab/jupyter-renderers/
+
 A JupyterLab and Jupyter Notebook extension for rendering Vega and Vega-lite
 
 **This repository is no longer active; the vega/vega-lite extension now comes bundled with JupyterLab by default**
